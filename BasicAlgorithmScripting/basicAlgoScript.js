@@ -42,8 +42,59 @@ function findLongestWordLength(str) {
 	return strArr[strArr.length - 1];
 }
 
-console.log(
-	findLongestWordLength(
-		'What if we try a super-long word such as otorhinolaryngology'
-	)
-);
+// console.log(
+// 	findLongestWordLength(
+// 		'What if we try a super-long word such as otorhinolaryngology'
+// 	)
+// );
+
+/* ================================================= */
+/* Return Largest Numbers in Arrays */
+function largestOfFour(arr) {
+	let newArr = [];
+	for (let i = 0; i < arr.length; i++) {
+		// console.log(arr[i].sort((a, b) => a - b))
+		let sortedArrs = arr[i].sort((a, b) => a - b);
+		console.log(sortedArrs[sortedArrs.length - 1]);
+		newArr.push(sortedArrs[sortedArrs.length - 1]);
+	}
+
+	return newArr;
+}
+
+// console.log(
+// 	largestOfFour([
+// 		[4, 5, 1, 3],
+// 		[13, 27, 18, 26],
+// 		[32, 35, 37, 39],
+// 		[1000, 1001, 857, 1],
+// 	])
+// );
+
+/* ================================================= */
+/* Confirm the Ending */
+// https://reactgo.com/javascript-variable-regex/
+function confirmEnding(str, target) {
+	let regexVar = target + '$';
+	const regex = new RegExp(regexVar, 'i');
+
+	return regex.test(str);
+}
+
+// console.log(confirmEnding('Connor', 'nor'));
+
+/* ================================================= */
+/* Repeat a String Repeat a StringPassed */
+function repeatStringNumTimes(str, num) {
+	let newStr = '';
+	if (num <= 0) {
+		return '';
+	}
+	for (let i = 0; i < num; i++) {
+		newStr += str;
+	}
+
+	return newStr;
+}
+
+// console.log(repeatStringNumTimes('abc', 3));
