@@ -200,3 +200,34 @@ function getRating(watchList) {
 	return averageRating;
 }
 console.log(getRating(watchList));
+
+/* ======================================== */
+/* Use Higher-Order Functions map, filter, or reduce to Solve a Complex Problem */
+
+// The function should return a new array containing the squares of only the positive integers
+const squareList = arr => {
+	// Only change code below this line
+	// find positive integers in the array
+	const filteredarr = arr.filter(num => num > 0 && Number.isInteger(num));
+
+	// square the positive integers
+	return filteredarr.map(num => num * num);
+	// Only change code above this line
+};
+
+const squaredIntegers = squareList([-3, 4.8, 5, 3, -3.2]);
+console.log(squaredIntegers);
+
+/* ======================================== */
+/* Apply Functional Programming to Convert Strings to URL Slugs */
+// Only change code below this line
+function urlSlug(title) {
+	title = title.toLowerCase().trim();
+	title = title.split(' ');
+	title = title.filter(item => item != '');
+	title = title.join('-');
+	return title;
+}
+// Only change code above this line
+
+console.log(urlSlug(' Winter Is  Coming'));

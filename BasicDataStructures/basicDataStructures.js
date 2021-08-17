@@ -93,7 +93,7 @@ function getArrayOfUsers(obj) {
 // console.log(getArrayOfUsers(users));
 
 /* ====================================== */
-/* Modify an Array Stored in an ObjectPassed */
+/* Modify an Array Stored in an Object */
 let user = {
 	name: 'Kenneth',
 	age: 28,
