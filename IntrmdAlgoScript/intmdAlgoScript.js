@@ -86,14 +86,83 @@ function diffArray(arr1, arr2) {
 // Spinal Tap Case
 // Convert a string to spinal case. Spinal case is all-lowercase-words-joined-by-dashes.
 
-function spinalCase(str) {
-	// regex that matches spaces or uppercase or underscore or dash. Uppercase part contains a positive lookahead to keep the capital letters
-	const regex = /\s|(?=[A-Z])|_|-/
-	
-	const splitStr = str.split(regex)
+// function spinalCase(str) {
+// 	// regex that matches spaces or uppercase or underscore or dash. Uppercase part contains a positive lookahead to keep the capital letters
+// 	const regex = /\s|(?=[A-Z])|_|-/
 
-	return splitStr.join('-').toLowerCase()
+// 	const splitStr = str.split(regex)
+
+// 	return splitStr.join('-').toLowerCase()
+// }
+
+// console.log(spinalCase('AllThe-small Things')); // should return the string this-is-spinal-tap.
+
+/* ============================================== */
+// Pig Latin
+// 1. check if word begins with a consonant,
+// 2. take the first consonant or consonant cluster, move it to the end of the word, and add ay to it.
+// 3. If a word begins with a vowel, add way at the end.
+// function translatePigLatin(str) {
+// 	const vowels = ['a', 'e', 'i', 'o', 'u'];
+// 	const beginningRegex = /^[aeiou]/i;
+// 	const allRegex = /[aeiou]/i;
+
+// 	// if str begins with a vowel, add 'way' on the end
+// 	if (beginningRegex.test(str)) {
+// 		return str + 'way';
+// 	}
+
+// 	// if str does not have any vowels, add 'ay to the end
+// 	if (!allRegex.test(str)) {
+// 		return str + 'ay';
+// 	}
+
+// 	// if str begins with a consonant, compare string characters with array of vowels
+// 	for (let i = 0; i < str.length; i++) {
+// 		for (let j = 0; j < vowels.length; j++) {
+// 			// check if a character in str is a vowel
+// 			if (vowels[j] === str[i]) {
+// 				// get consonants from beginning
+// 				let consonants = str.slice(0, str.indexOf(str[i]));
+
+// 				// get rest of the string after consonants
+// 				let theRest = str.slice(str.indexOf(str[i]));
+
+// 				// add 'way' to the end of theRest
+// 				return theRest + consonants + 'ay';
+// 			}
+// 		}
+// 	}
+// }
+
+// console.log(translatePigLatin('rhythm'));
+
+/* ============================================== */
+// Search and Replace
+function myReplace(str, before, after) {
+	const regex = new RegExp(before, 'g');
+
+	// if before starts with cap,
+	if (before[0] === before[0].toUpperCase()) {
+		// make after start with a cap
+		after = after[0].toUpperCase() + after.slice(1, after.length);
+	}
+
+	// if before starts with lowecase,
+	if (before[0] === before[0].toLowerCase()) {
+		after = after.toLowerCase();
+	}
+
+	const newstr = str.replace(regex, after);
+	return newstr;
 }
 
-console.log(spinalCase('AllThe-small Things')); // should return the string this-is-spinal-tap.
+// console.log(myReplace('He is Sleeping on the couch', 'Sleeping', 'sitting'));
 
+/* ============================================== */
+// DNA Pairing
+function pairElement(str) {
+	return str;
+}
+
+console.log(pairElement('GCG'));

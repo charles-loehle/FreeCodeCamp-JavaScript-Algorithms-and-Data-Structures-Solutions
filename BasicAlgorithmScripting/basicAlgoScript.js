@@ -73,6 +73,7 @@ function largestOfFour(arr) {
 
 /* ================================================= */
 /* Confirm the Ending */
+// using variables in a regular expression
 // https://reactgo.com/javascript-variable-regex/
 function confirmEnding(str, target) {
 	let regexVar = target + '$';
@@ -81,7 +82,7 @@ function confirmEnding(str, target) {
 	return regex.test(str);
 }
 
-// console.log(confirmEnding('Connor', 'nor'));
+console.log(confirmEnding('Connor', 'nor'));// should return true 
 
 /* ================================================= */
 /* Repeat a String Repeat a StringPassed */
