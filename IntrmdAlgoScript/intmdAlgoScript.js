@@ -161,8 +161,52 @@ function myReplace(str, before, after) {
 
 /* ============================================== */
 // DNA Pairing
+// “A” and “T” are always paired together, and “G” and “C” are always paired together.
+// ("ATCGA") should return [["A","T"],["T","A"],["C","G"],["G","C"],["A","T"]]
 function pairElement(str) {
+	const splitStr = str.split('');
+	console.log(splitStr);
+	const arr = [];
+
+	const mapped = splitStr.map(item => {
+		switch (item) {
+			case 'A':
+				arr.push([item, 'T']);
+				break;
+			case 'C':
+				arr.push([item, 'G']);
+				break;
+			case 'G':
+				arr.push([item, 'C']);
+				break;
+			case 'T':
+				arr.push([item, 'A']);
+				break;
+		}
+	});
+
+	return arr;
+}
+
+// console.log(pairElement('ATCGA')); // [['G', 'C'], ['C', 'G'], ['G', 'C']]
+
+/* ============================================== */
+// Misssing Letters
+// Find the missing letter in the passed letter range and return it.
+// If all letters are present in the range, return undefined.
+function fearNotLetter(str) {
 	return str;
 }
 
-console.log(pairElement('GCG'));
+console.log(fearNotLetter('abce')); // should return the string d
+/**
+ * fearNotLetter("abce") should return the string d.
+
+fearNotLetter("abcdefghjklmno") should return the string i.
+
+fearNotLetter("stvwx") should return the string u.
+
+fearNotLetter("bcdf") should return the string e.
+
+fearNotLetter("abcdefghijklmnopqrstuvwxyz") should return undefined.
+ */
