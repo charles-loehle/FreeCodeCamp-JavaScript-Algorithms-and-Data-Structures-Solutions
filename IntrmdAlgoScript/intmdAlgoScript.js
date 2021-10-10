@@ -355,11 +355,54 @@ function convertHTML(str) {
 
 // For example, sumFibs(10) should return 10 because all odd Fibonacci numbers less than or equal to 10 are 1, 1, 3, and 5
 
-function sumFibs(num) {
+// https://dev.to/virenb/solving-sum-all-odd-fibonacci-numbers-freecodecamp-algorithm-challenges-nbc
+// get us all the Fibonacci numbers less than our num
+// function sumFibs(num) {
+// 	let fibs = [1, 1]; // first pair
+// 	let count = 0;
+// 	let fibNums;
+// 	let oddFibs = [];
+
+// 	while (num > count) {
+// 		// fibonacci stuff here
+// 		fibNums = fibs[count] + fibs[count + 1];
+
+// 		if (fibNums <= num) {
+// 			// check for odd numbers
+// 			if (fibNums % 2 === 1) {
+// 				// push the odd numbers onto a new array
+// 				oddFibs.push(fibNums);
+// 			}
+// 			// push all the fibonacci numbers onto the fibs array
+// 			fibs.push(fibNums);
+// 		}
+
+// 		count++;
+// 	}
+
+// 	// add all the items in odd fibs array with an initial value of 2
+// 	return oddFibs.reduce((a, b) => {
+// 		return a + b;
+// 	}, 2);
+// }
+
+// console.log(sumFibs(1000));
+
+/* =========================================================== */
+// Sum All Primes
+/**
+ * A prime number is a whole number greater than 1 with exactly two divisors: 1 and itself. For example, 2 is a prime number because it is only divisible by 1 and 2. In contrast, 4 is not prime since it is divisible by 1, 2 and 4.
+
+Rewrite sumPrimes so it returns the sum of all prime numbers that are less than or equal to num.
+ */
+
+function sumPrimes(num) {
 	return num;
 }
 
-console.log(sumFibs(4));
-// sumFibs(4) should return 5.
-// sumFibs(1000) should return 1785.
-// sumFibs(4000000) should return 4613732.
+console.log(sumPrimes(10));
+/**
+ * sumPrimes(10) should return a number.
+sumPrimes(10) should return 17.
+sumPrimes(977) should return 73156.
+ */
