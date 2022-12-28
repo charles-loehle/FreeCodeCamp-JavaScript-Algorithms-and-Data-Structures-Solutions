@@ -19,14 +19,25 @@ function reverseString(str) {
 
 /* ================================================= */
 /* Factorialize a Number */
+/* Solution #1 */
 function factorialize(num) {
-	if (num === 1 || num === 0) {
-		return 1;
+	let newNum = 1;
+	let count = 1;
+	while (count < num) {
+		newNum = newNum * (count + 1);
+		count++;
 	}
-
-	return num * factorialize(num - 1);
+	return newNum;
 }
+//console.log(factorialize(5));
 
+/* Solution #2 */
+// function factorialize(num) {
+// 	if (num === 1 || num === 0) {
+// 		return 1;
+// 	}
+// 	return num * factorialize(num - 1);
+// }
 // console.log(factorialize(5));
 
 /* ================================================= */
@@ -75,38 +86,65 @@ function largestOfFour(arr) {
 /* Confirm the Ending */
 // using variables in a regular expression
 // https://reactgo.com/javascript-variable-regex/
-function confirmEnding(str, target) {
-	let regexVar = target + '$';
-	const regex = new RegExp(regexVar, 'i');
+/* Soution #1 */
+// function confirmEnding(str, target) {
+// 	let regexVar = target + '$';
+// 	const regex = new RegExp(regexVar, 'i');
 
-	return regex.test(str);
+// 	return regex.test(str);
+// }
+
+/* Solution #2 */
+function confirmEnding(str, target) {
+	return str.substring(str.length - target.length) === target ? true : false;
 }
 
-console.log(confirmEnding('Connor', 'nor'));// should return true 
+//console.log(confirmEnding('Connor', 'nor')); // should return true
 
 /* ================================================= */
 /* Repeat a String Repeat a StringPassed */
-function repeatStringNumTimes(str, num) {
-	let newStr = '';
-	if (num <= 0) {
-		return '';
-	}
-	for (let i = 0; i < num; i++) {
-		newStr += str;
-	}
+/* Solution #1 */
+// function repeatStringNumTimes(str, num) {
+// 	let newStr = '';
+// 	if (num <= 0) {
+// 		return '';
+// 	}
+// 	for (let i = 0; i < num; i++) {
+// 		newStr += str;
+// 	}
+// 	return newStr;
+// }
 
-	return newStr;
+/* Solution #2 */
+function repeatStringNumTimes(str, num) {
+	let arr = [];
+	let count = 1;
+	while (count <= num) {
+		arr.push(str);
+		count++;
+	}
+	return arr.join('');
 }
 
 // console.log(repeatStringNumTimes('abc', 3));
 
 /* ============================================= */
 /* Truncate a String */
+/* Solution #1 */
+// function truncateString(str, num) {
+// 	if (num >= str.length) {
+// 		return str.slice(0, num);
+// 	} else {
+// 		return str.slice(0, num) + '...';
+// 	}
+// }
+
+/* Solution #2 */
 function truncateString(str, num) {
-	if (num >= str.length) {
-		return str.slice(0, num);
+	if (str.length > num) {
+		return str.substring(0, num) + '...';
 	} else {
-		return str.slice(0, num) + '...';
+		return str;
 	}
 }
 
@@ -114,39 +152,62 @@ function truncateString(str, num) {
 
 /* ============================================= */
 /* Finders Keepers */
+/* Solution #1 */
+// function findElement(arr, func) {
+// 	let num = 0;
+// 	for (let i = 0; i < arr.length; i++) {
+// 		if (func(arr[i]) === true) {
+// 			return (num = arr[i]);
+// 		} else {
+// 			num = undefined;
+// 		}
+// 	}
+// 	return num;
+// }
+
+/* Solution #2 */
 function findElement(arr, func) {
-	let num = 0;
 	for (let i = 0; i < arr.length; i++) {
-		// console.log(func(arr[i]))
-		if (func(arr[i]) === true) {
-			return (num = arr[i]);
-		} else {
-			num = undefined;
+		if (func(arr[i])) {
+			return arr[i];
 		}
 	}
-	return num;
 }
 
 // console.log(findElement([1, 3, 5, 8, 9, 10], function(num) { return num % 2 === 0; }))
 
 /* =========================== */
 /* Title Case a Sentence */
+/* Solution #1 */
+// function titleCase(str) {
+// 	const strToArray = str.toLowerCase().split(' ');
+// 	let newArr = [];
+// 	for (let i = 0; i < strToArray.length; i++) {
+// 		//console.log(strToArray[i])
+// 		newArr.push(strToArray[i][0].toUpperCase() + strToArray[i].substring(1));
+// 	}
+// 	return newArr.join(' ');
+// }
+
+/* Solution #2 */
 function titleCase(str) {
-	const strToArray = str.toLowerCase().split(' ');
-	let newArr = [];
-	for (let i = 0; i < strToArray.length; i++) {
-		//console.log(strToArray[i])
-		newArr.push(strToArray[i][0].toUpperCase() + strToArray[i].substring(1));
-	}
-	return newArr.join(' ');
+	let arr = str.split(' ');
+	return arr
+		.map(
+			word =>
+				word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase()
+		)
+		.join(' ');
 }
 
 // console.log(titleCase("I'm a little tea pot"));
 
 /* ========================================= */
-/* Slice and Splice UNFINISHED */
+/* Slice and Splice */
 function frankenSplice(arr1, arr2, n) {
-	return arr2;
+	let newArr = [...arr2];
+	newArr.splice(n, 0, ...arr1);
+	return newArr;
 }
 
 frankenSplice([1, 2, 3], [4, 5, 6], 1);
