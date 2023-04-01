@@ -214,25 +214,19 @@ frankenSplice([1, 2, 3], [4, 5, 6], 1);
 
 /* ========================================= */
 /* Falsey Bouncer */
-
+/* Solution #1 */
 function bouncer(arr) {
-	const mapped = arr.filter(item => {
-		if (
-			item !== '' ||
-			item !== false ||
-			item !== NaN ||
-			item !== null ||
-			item !== 0
-		)
-			return item;
+	const filtered = arr.filter(item => {
+		if (item) return item;
 	});
 
-	return mapped;
+	return filtered;
 }
 
-console.log(bouncer([7, 'ate', '', false, 9, NaN]));
+// console.log(bouncer([7, 'ate', '', false, 9, NaN]));
 // false, null, 0, "", undefined, and NaN
 
+/* Solution #2 */
 function bouncer2(arr) {
 	let newArr = [];
 	for (let i = 0; i < arr.length; i++) {
@@ -251,17 +245,24 @@ function bouncer2(arr) {
 
 /* ========================================= */
 /* Where Do I Belong */
+/* Solution #1 */
+// function getIndexToIns(arr, num) {
+// 	arr.push(num);
+// 	let newArr = [];
+// 	const sorted = arr.sort((a, b) => a - b);
+// 	for (let i = 0; i < sorted.length; i++) {
+// 		// console.log(sorted[i] === num)
+// 		if (sorted[i] === num) {
+// 			newArr.push(i);
+// 		}
+// 	}
+// 	return newArr[0];
+// }
+
+/* Solution #2 */
 function getIndexToIns(arr, num) {
-	arr.push(num);
-	let newArr = [];
-	const sorted = arr.sort((a, b) => a - b);
-	for (let i = 0; i < sorted.length; i++) {
-		// console.log(sorted[i] === num)
-		if (sorted[i] === num) {
-			newArr.push(i);
-		}
-	}
-	return newArr[0];
+	let sorted = [...arr, num].sort((a, b) => a - b);
+	return sorted.indexOf(num);
 }
 
 // console.log(getIndexToIns([10, 20, 30, 40, 50], 35));
@@ -269,19 +270,27 @@ function getIndexToIns(arr, num) {
 /* ========================================= */
 /* Mutations */
 // https://stackoverflow.com/questions/1885557/simplest-code-for-array-intersection-in-javascript
-function mutation(arr) {
-	const array1 = arr[0].toLowerCase().split('');
-	const array2 = arr[1].toLowerCase().split('');
-	// console.log(array2)
-	const mappedArray = array2.map(value => array1.includes(value));
-	// console.log(mappedArray);
-	// console.log(mappedArray.includes(false))
+/* Solution #1 */
+// function mutation(arr) {
+// 	const array1 = arr[0].toLowerCase().split('');
+// 	const array2 = arr[1].toLowerCase().split('');
+// 	// console.log(array2)
+// 	const mappedArray = array2.map(value => array1.includes(value));
+// 	// console.log(mappedArray);
+// 	// console.log(mappedArray.includes(false))
 
-	if (mappedArray.includes(false)) {
-		return false;
-	} else {
-		return true;
-	}
+// 	if (mappedArray.includes(false)) {
+// 		return false;
+// 	} else {
+// 		return true;
+// 	}
+// }
+
+/* Solution #2 */
+function mutation(arr) {
+	let str1 = arr[0].toLowerCase().split('').sort();
+	let str2 = arr[1].toLowerCase().split('').sort();
+	return str2.every(element => str1.includes(element));
 }
 
 // console.log(mutation(["Alien", "line"]));

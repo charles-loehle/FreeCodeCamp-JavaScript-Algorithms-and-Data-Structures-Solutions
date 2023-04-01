@@ -1,28 +1,39 @@
 /* ================================================== */
 /* Sum All Numbers in a Range */
 // We'll pass you an array of two numbers. Return the sum of those two numbers plus the sum of all the numbers between them. The lowest number will not always come first
+// #1
+// function sumAll(arr) {
+// 	// let n = 0;
+// 	let sortedArr = arr.sort((a, b) => a - b);
+// 	// console.log(sortedArr);
+// 	let sum = 0;
+// 	let newArr = [];
+
+// 	// create range of numbers
+// 	for (let i = arr[0]; i <= sortedArr[1]; i++) {
+// 		const element = i;
+// 		// console.log(element);
+// 		newArr.push(element);
+// 	}
+
+// 	// add range of numbers
+// 	// using reduce or for loop
+// 	// return newArr.reduce((acc, curr) => acc + curr);
+// 	for (let i = 0; i < newArr.length; i++) {
+// 		sum += newArr[i];
+// 	}
+
+// 	return sum;
+// }
+
+// #2
 function sumAll(arr) {
-	// let n = 0;
-	let sortedArr = arr.sort((a, b) => a - b);
-	// console.log(sortedArr);
-	let sum = 0;
-	let newArr = [];
-
-	// create range of numbers
-	for (let i = arr[0]; i <= sortedArr[1]; i++) {
-		const element = i;
-		// console.log(element);
-		newArr.push(element);
+	arr.sort((a, b) => a - b);
+	let countArr = [];
+	for (let i = arr[0]; i <= arr[arr.length - 1]; i++) {
+		countArr.push(i);
 	}
-
-	// add range of numbers
-	// using reduce or for loop
-	// return newArr.reduce((acc, curr) => acc + curr);
-	for (let i = 0; i < newArr.length; i++) {
-		sum += newArr[i];
-	}
-
-	return sum;
+	return countArr.reduce((acc, curr) => acc + curr, 0);
 }
 
 //console.log(sumAll([4, 1]));
@@ -32,29 +43,69 @@ function sumAll(arr) {
 // Compare two arrays and return a new array with any items only found in one of the two given arrays, but not both. In other words, return the symmetric difference of the two arrays.
 // Note: You can return the array with its elements in any order.
 // I googled this one
+// #1 I cheated
+// function diffArray(arr1, arr2) {
+// 	const spreaded = [...arr1, ...arr2];
+// 	return spreaded.filter(el => {
+// 		return !(arr1.includes(el) && arr2.includes(el));
+// 	});
+// }
+
+// #2 My solution. No cheating
+// function diffArray(arr1, arr2) {
+// 	const newArr = [];
+
+// 	arr1.map((element, index) => {
+// 		let found = arr2.find(item => item === arr1[index]);
+// 		if (found === undefined) newArr.push(arr1[index]);
+// 	});
+
+// 	arr2.map((element, index) => {
+// 		let found = arr1.find(item => item === arr2[index]);
+// 		if (found === undefined) newArr.push(arr2[index]);
+// 	});
+
+// 	// for(let i = 0; i < arr1.length; i++){
+// 	//   let found = arr2.find(item => item === arr1[i])
+// 	//   if(found === undefined) newArr.push(arr1[i])
+// 	// }
+
+// 	// for(let i = 0; i < arr2.length; i++){
+// 	//   let found = arr1.find(item => item === arr2[i])
+// 	//   if(found === undefined) newArr.push(arr2[i])
+// 	// }
+// }
+
+// #3 FCC Solution that I like
 function diffArray(arr1, arr2) {
-	const spreaded = [...arr1, ...arr2];
-	return spreaded.filter(el => {
-		return !(arr1.includes(el) && arr2.includes(el));
-	});
+	return arr1
+		.concat(arr2)
+		.filter(item => !arr1.includes(item) || !arr2.includes(item));
 }
-// console.log(diffArray([1, 2, 3, 5], [1, 2, 3, 4, 5]));
+// console.log(diffArray([1, 2, 3, 5], [1, 2, 3, 4, 5])); // [4]
 
 /* ======================================================= */
 /* Seek and Destroy */
 // You will be provided with an initial array (the first argument in the destroyer function), followed by one or more arguments. Remove all elements from the initial array that are of the same value as these arguments.
-function destroyer(arr) {
-	let arr1 = [...arguments[0]];
-	// console.log(arr1);
-	let arr2 = [...arguments].slice(1);
-	// console.log(arr2);
-	let argsArr = [...arr1, ...arr2];
-	// console.log(argsArr);
-	return argsArr.filter(el => {
-		return !(arr1.includes(el) && arr2.includes(el));
-	});
+// #1
+// function destroyer(arr) {
+// 	let arr1 = [...arguments[0]];
+// 	// console.log(arr1);
+// 	let arr2 = [...arguments].slice(1);
+// 	// console.log(arr2);
+// 	let argsArr = [...arr1, ...arr2];
+// 	// console.log(argsArr);
+// 	return argsArr.filter(el => {
+// 		return !(arr1.includes(el) && arr2.includes(el));
+// 	});
+// }
+
+// #2
+function destroyer(arr, ...args) {
+	return arr.filter(item => !args.includes(item));
 }
-// console.log(destroyer([3, 5, 1, 2, 2], 2, 3, 5)); // remove the 2s, 3s and 5s from arr
+
+//console.log(destroyer([3, 5, 1, 2, 2], 2, 3, 5)); // [1]
 
 /* ============================================== */
 /* Wherefore art thou */
@@ -62,12 +113,26 @@ function destroyer(arr) {
 
 // https://stackoverflow.com/questions/6237537/finding-matching-objects-in-an-array-of-objects
 function whatIsInAName(collection, source) {
-	return collection.filter(function (entry) {
-		return Object.keys(source).every(function (key) {
+	return collection.filter(entry => {
+		// run filter on the source keys
+		return Object.keys(source).every(key => {
+			// check if every collection key matches every source key
 			return entry[key] === source[key];
 		});
 	});
 }
+
+console.log(
+	whatIsInAName(
+		[
+			{ first: 'Romeo', last: 'Montague' },
+			{ first: 'Mercutio', last: null },
+			{ first: 'Tybalt', last: 'Capulet' },
+		],
+		{ last: 'Capulet' }
+	)
+);
+
 var collection = [
 	{ color: 'blue' },
 	{ color: 'green' },
@@ -144,18 +209,15 @@ function translatePigLatin(str) {
 // Search and Replace
 function myReplace(str, before, after) {
 	const regex = new RegExp(before, 'g');
-
 	// if before starts with cap,
 	if (before[0] === before[0].toUpperCase()) {
 		// make after start with a cap
 		after = after[0].toUpperCase() + after.slice(1, after.length);
 	}
-
 	// if before starts with lowecase,
 	if (before[0] === before[0].toLowerCase()) {
 		after = after.toLowerCase();
 	}
-
 	const newstr = str.replace(regex, after);
 	return newstr;
 }
@@ -196,6 +258,7 @@ function pairElement(str) {
 /* ============================================== */
 // Misssing Letters
 // Find the missing letter in the passed letter range and return it.
+// #1
 // If all letters are present in the range, return undefined.
 function fearNotLetter(str) {
 	const alphabet = 'abcdefghijklmnopqrstuvwxyz';
@@ -231,17 +294,35 @@ function fearNotLetter(str) {
 }
 
 // console.log(fearNotLetter('abcdefghijklmnopqrstuvwxyz')); // should return the string d
-/**
- * fearNotLetter("abce") should return the string d.
 
-fearNotLetter("abcdefghjklmno") should return the string i.
+// #2
+function fearNotLetter(str) {
+	const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+	// if no letters are missing, return undefined
+	const regex = new RegExp(str, 'g');
+	if (alphabet.search(regex) !== -1) {
+		return undefined;
+	}
 
-fearNotLetter("stvwx") should return the string u.
+	// convert str characters to ascii
+	for (let i = 0; i < str.length; i++) {
+		let charCode = str.charCodeAt(i);
+		// if difference of charCodes is -2, return the missing letter (charCode + 1)
+		if (charCode - str.charCodeAt(i + 1) === -2) {
+			return String.fromCharCode(charCode + 1);
+		}
+	}
+}
+console.log(fearNotLetter('abce'));
 
-fearNotLetter("bcdf") should return the string e.
-
-fearNotLetter("abcdefghijklmnopqrstuvwxyz") should return undefined.
- */
+// FFC shortest solution
+function fearNotLetter(str) {
+	for (let i = 1; i < str.length; ++i) {
+		if (str.charCodeAt(i) - str.charCodeAt(i - 1) > 1) {
+			return String.fromCharCode(str.charCodeAt(i - 1) + 1);
+		}
+	}
+}
 
 /* ============================================== */
 // Sorted Union
@@ -323,12 +404,29 @@ function uniteUnique(...args) {
 	return newArr;
 }
 
+// my #2 solution
+function uniteUnique(...args) {
+	var union = [];
+
+	for (let i = 0; i < args.length; i++) {
+		union.push(...new Set([...args[i]]));
+	}
+
+	for (let i = 0; i < union.length; ++i) {
+		for (let j = i + 1; j < union.length; ++j) {
+			if (union[i] === union[j]) union.splice(j--, 1);
+		}
+	}
+	return union;
+}
+
 // console.log(uniteUnique([1, 3, 2], [5, 2, 1, 4], [2, 1]));
 
 /* ============================================== */
 // Convert HTML Entities
 // Convert the characters &, <, >, " (double quote), and ' (apostrophe), in a string to their corresponding HTML entities.
 // & = &amp;  < = &lt;   > = &gt;   " = &quot;   ' = &apos;
+// #1 solution
 function convertHTML(str) {
 	const splitStr = str.split('');
 	const specialChars = [
@@ -346,6 +444,26 @@ function convertHTML(str) {
 	});
 
 	return splitStr.join('');
+}
+
+// #2 solution
+const htmlEntities = [
+	{ character: '&', entity: '&amp;' },
+	{ character: '<', entity: '&lt;' },
+	{ character: '>', entity: '&gt;' },
+	{ character: '"', entity: '&quot;' },
+	{ character: "'", entity: '&apos;' },
+];
+function convertHTML(str) {
+	// find the html entities
+	for (let i = 0; i < str.length; i++) {
+		let found = htmlEntities.find(({ character }) => character === str[i]);
+		// replae the character with html entity
+		if (found !== undefined) {
+			str = str.replace(str[i], found.entity);
+		}
+	}
+	return str;
 }
 
 // console.log(convertHTML('<>'));
@@ -405,7 +523,7 @@ sumPrimes(977) should return 73156.
  */
 // get primes from stack overflow
 // https://stackoverflow.com/questions/11966520/how-to-find-prime-numbers-between-0-100
-
+// #1
 function sumPrimes(max) {
 	// begin get primes
 	const sieve = [];
@@ -427,6 +545,29 @@ function sumPrimes(max) {
 }
 
 // console.log(sumPrimes(10));
+
+// #2
+function sumPrimes(num) {
+	const numArr = [];
+	// create an array numArr of numbers from 1 to num
+	for (let i = 2; i <= num; i++) {
+		numArr.push(i);
+	}
+	// create new array primesArr with primes from numArr then return their sum
+	const primesArr = numArr
+		.filter(number => {
+			for (let i = 2; i <= Math.sqrt(number); i++) {
+				if (number % i === 0) {
+					return false;
+				}
+			}
+			return true;
+		})
+		.reduce((acc, curr) => acc + curr, 0);
+
+	return primesArr;
+}
+console.log(sumPrimes(4));
 
 /* =========================================== */
 // Smallest Common Multiple. I CHEATED!!!
@@ -611,8 +752,20 @@ function steamrollArray2(arr) {
 // parseInt('01000001', 2) => 65: convert binary to decimal
 // String.charCodeAt(): returns decimal UTF-16 character code.
 // String.fromCharCode(65)) => 'A': convert decimal to string character
+// #1
 function binaryAgent(str) {
 	return str.split(' ')[0];
+}
+
+// #2
+function binaryAgent(str) {
+	const binaryArr = str.split(' ');
+	// binary to decimal with parseInt
+	const toDecimal = binaryArr.map(item => parseInt(item, 2));
+	// decimal to string with String.fromCharCode
+	const toString = toDecimal.map(item => String.fromCharCode(item));
+
+	return toString.join('');
 }
 
 console.log(
@@ -621,3 +774,147 @@ console.log(
 	)
 );
 // should return the string Aren't bonfires fun!?
+
+/**
+ * Everything Be True
+ */
+// Check if the predicate (second argument) is truthy on all elements of a collection (first argument).
+// In other words, you are given an array collection of objects. The predicate pre will be an object property and you need to return true if its value is truthy. Otherwise, return false.
+function truthCheck(collection, pre) {
+	return collection
+		.map(item => item[pre])
+		.every(item => {
+			if (item) {
+				return true;
+			} else {
+				return false;
+			}
+		});
+}
+
+truthCheck(
+	[
+		{ name: 'Quincy', role: 'Founder', isBot: false },
+		{ name: 'Naomi', role: '', isBot: false },
+		{ name: 'Camperbot', role: 'Bot', isBot: true },
+	],
+	'isBot'
+);
+
+/**
+ * Arguments Optional
+ */
+// Create a function that sums two arguments together. If only one argument is provided, then return a function that expects one argument and returns the sum. For example, addTogether(2, 3) should return 5, and addTogether(2) should return a function.
+function addTogether(...args) {
+	const [a, b] = args;
+	// check if one or two params
+	if (arguments.length === 2) {
+		// if two params, check if both params are numbers
+		if (typeof a === 'number' && typeof b === 'number') {
+			// return the sum of the params
+			return a + b;
+		} else {
+			// if either is not a number, return undefined
+			return undefined;
+		}
+		// if one param, return a function with 1 argument
+	} else {
+		if (typeof a === 'number') {
+			const innerFunc = c => {
+				// check if innerFunc param is a number
+				if (typeof c === 'number') {
+					// return sum of outer func param and innerFunc param
+					return a + c;
+				} else {
+					// if innerFunc param is not a number, return undefined
+					return undefined;
+				}
+			};
+			return innerFunc;
+		} else {
+			return undefined;
+		}
+	}
+}
+// console.log(addTogether(5)(7));
+
+/**
+ * Make a Person
+ */
+/*
+Fill in the object constructor with the following methods below:
+
+getFirstName()
+getLastName()
+getFullName()
+setFirstName(first)
+setLastName(last)
+setFullName(firstAndLast)
+Run the tests to see the expected output for each method. The methods that take an argument must accept only one argument and it has to be a string. These methods must be the only available means of interacting with the object.
+*/
+// I looked up help but didnt use all of their code https://dev.to/virenb/solving-make-a-person-freecodecamp-algorithm-challenges-2mg
+const Person = function (firstAndLast) {
+	// Only change code below this line
+	// Complete the method below and implement the others similarly]
+	let [firstName, lastName] = firstAndLast.split(' ');
+
+	this.setFirstName = function (first) {
+		firstName = first;
+		return firstName;
+	};
+
+	this.setLastName = function (last) {
+		lastName = last;
+		return lastName;
+	};
+
+	this.setFullName = function (firstAndLast) {
+		let [first, last] = firstAndLast.split(' ');
+		firstName = first;
+		lastName = last;
+	};
+
+	this.getFullName = function () {
+		return firstName + ' ' + lastName;
+	};
+
+	this.getFirstName = function () {
+		return firstName;
+	};
+
+	this.getLastName = function () {
+		return lastName;
+	};
+};
+
+const bob = new Person('Bob Ross');
+// bob.setFirstName('asdf')
+// bob.setLastName('1234')
+// bob.setFullName('Haskell Curry')
+//console.log(bob.getFirstName());
+
+/**
+ * Map the Debris
+ */
+function orbitalPeriod(arr) {
+	const GM = 398600.4418;
+	const earthRadius = 6367.4447;
+
+	const mapped = arr.map(item => {
+		const { name, avgAlt } = item;
+		const aCubed = Math.pow(earthRadius + avgAlt, 3);
+		const innerRoot = aCubed / GM;
+		const sqrRoot = Math.sqrt(innerRoot);
+		const T = Math.round(2 * Math.PI * sqrRoot);
+		return { name, orbitalPeriod: T };
+	});
+	return mapped;
+}
+
+console.log(
+	orbitalPeriod([
+		{ name: 'iss', avgAlt: 413.6 },
+		{ name: 'hubble', avgAlt: 556.7 },
+		{ name: 'moon', avgAlt: 378632.553 },
+	])
+);

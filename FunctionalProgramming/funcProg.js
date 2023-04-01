@@ -1,4 +1,66 @@
 /* ======================================== */
+/* Understand the Hazards of Using Imperative Code */
+// tabs is an array of titles of each site open within the window
+const Window = function (tabs) {
+	this.tabs = tabs; // We keep a record of the array inside the object
+};
+
+// When you join two windows into one window
+Window.prototype.join = function (otherWindow) {
+	this.tabs = this.tabs.concat(otherWindow.tabs);
+	return this;
+};
+
+// When you open a new tab at the end
+Window.prototype.tabOpen = function (tab) {
+	this.tabs.push('new tab'); // Let's open a new tab for now
+	return this;
+};
+
+// When you close a tab
+Window.prototype.tabClose = function (index) {
+	// Only change code below this line
+
+	const tabsBeforeIndex = this.tabs.splice(0, index); // Get the tabs before the tab
+	const tabsAfterIndex = this.tabs.splice(1); // Get the tabs after the tab
+
+	this.tabs = tabsBeforeIndex.concat(tabsAfterIndex); // Join them together
+
+	// Only change code above this line
+
+	return this;
+};
+
+// Let's create three browser windows
+const workWindow = new Window([
+	'GMail',
+	'Inbox',
+	'Work mail',
+	'Docs',
+	'freeCodeCamp',
+]); // Your mailbox, drive, and other work sites
+const socialWindow = new Window([
+	'FB',
+	'Gitter',
+	'Reddit',
+	'Twitter',
+	'Medium',
+]); // Social sites
+const videoWindow = new Window(['Netflix', 'YouTube', 'Vimeo', 'Vine']); // Entertainment sites
+
+console.log(videoWindow);
+console.log(workWindow);
+// Now perform the tab opening, closing, and other operations
+const finalTabs = socialWindow
+	.tabOpen() // Open a new tab for cat memes
+	.join(videoWindow.tabClose(2)) // Close third tab in video window, and join
+	.join(workWindow.tabClose(1).tabOpen());
+console.log(finalTabs.tabs);
+// should be ['FB', 'Gitter', 'Reddit', 'Twitter', 'Medium', 'new tab', 'Netflix', 'YouTube', 'Vine', 'GMail', 'Work mail', 'Docs', 'freeCodeCamp', 'new tab']
+
+/* ======================================== */
+
+/* ======================================== */
 /* Implement map on a Prototype */
 
 // The global variable
@@ -185,9 +247,9 @@ var watchList = [
 	},
 ];
 // Use reduce to find the average IMDB rating of the movies directed by Christopher Nolan
+// #1
 function getRating(watchList) {
 	// Only change code below this line
-
 	const movies = watchList.filter(movie => {
 		return movie.Director === 'Christopher Nolan';
 	});
@@ -199,7 +261,23 @@ function getRating(watchList) {
 	// Only change code above this line
 	return averageRating;
 }
-console.log(getRating(watchList));
+
+// #2
+function getRating(watchList) {
+	// Only change code below this line
+	const movieRatings = watchList
+		.map(item => ({
+			director: item.Director,
+			rating: item.imdbRating,
+		}))
+		.filter(item => item.director === 'Christopher Nolan')
+		.map(item => +item.rating);
+	const addedRatings = movieRatings.reduce((a, b) => a + b);
+	const averageRating = addedRatings / movieRatings.length;
+	// Only change code above this line
+	return averageRating;
+}
+//console.log(getRating(watchList));
 
 /* ======================================== */
 /* Use Higher-Order Functions map, filter, or reduce to Solve a Complex Problem */
@@ -208,7 +286,7 @@ console.log(getRating(watchList));
 const squareList = arr => {
 	// Only change code below this line
 	// find positive integers in the array
-	const filteredarr = arr.filter(num => num > 0 && Number.isInteger(num));
+	const filteredarr = arr.filter(num => num >= 0 && Number.isInteger(num));
 
 	// square the positive integers
 	return filteredarr.map(num => num * num);
@@ -216,10 +294,11 @@ const squareList = arr => {
 };
 
 const squaredIntegers = squareList([-3, 4.8, 5, 3, -3.2]);
-console.log(squaredIntegers);
+//console.log(squaredIntegers);
 
 /* ======================================== */
 /* Apply Functional Programming to Convert Strings to URL Slugs */
+//#1
 // Only change code below this line
 function urlSlug(title) {
 	title = title.toLowerCase().trim();
@@ -230,4 +309,58 @@ function urlSlug(title) {
 }
 // Only change code above this line
 
-console.log(urlSlug(' Winter Is  Coming'));
+//console.log(urlSlug(' Winter Is  Coming'));
+
+// #2
+// function urlSlug(title) {
+//   title = title.toLowerCase().split(' ')
+//   title = title.filter(item => item !== '').map(item => item + '-').join('')
+//   title = title.slice(0, title.length - 1)
+//   return title
+// }
+// Only change code above this line
+//console.log(urlSlug(" Winter Is  Coming"));
+
+/* ======================================== */
+/* Use the every Method to Check that Every Element in an Array Meets a Criteria
+ */
+function checkPositive(arr) {
+	// Only change code below this line
+	return arr.every(val => val > 0);
+	// Only change code above this line
+}
+//checkPositive([1, 2, 3, -4, 5]);
+
+/* ======================================== */
+/* Use the some Method to Check that Any Elements in an Array Meet a Criteria
+ */
+function checkPositive(arr) {
+	// Only change code below this line
+	return arr.some(val => val > 0);
+	// Only change code above this line
+}
+//console.log(checkPositive([1, 2, 3, -4, 5]));
+
+/* ======================================== */
+/* Split a String into an Array Using the split Method */
+function splitify(str) {
+	// Only change code below this line
+	// Match Everything But Letters and Numbers
+	const re = /[^A-Za-z0-9_]/gi;
+	return str.split(re);
+	// Only change code above this line
+}
+
+//console.log(splitify("Hello World,I-am code"));
+
+/* ======================================== */
+/* Combine an Array into a String Using the join Method */
+function sentensify(str) {
+	// Only change code below this line
+	// Match Everything But Letters and Numbers
+	const re = /[^A-Za-z0-9_]/gi;
+	return str.split(re).join(' ');
+	// Only change code above this line
+}
+
+//console.log(sentensify('There,has,been,an,awakening'));
